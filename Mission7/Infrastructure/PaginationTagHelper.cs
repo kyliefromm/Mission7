@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -26,6 +27,10 @@ namespace Mission7.Infrastructure
       
 
         public string PageAction { get; set; }
+        public bool PageClassesEnabled { get; set; } = false;
+        public string PageClass { get; set; }
+        public string PageClassNormal { get; set; }
+        public string PageClassSelected { get; set; }
 
 
 
@@ -40,6 +45,12 @@ namespace Mission7.Infrastructure
                 TagBuilder tb = new TagBuilder("a");
 
                 tb.Attributes["href"] = uh.Action(PageAction, new { pageNum = i });
+                if (PageClassesEnabled)
+                {
+                    final.AddCssClass(PageClass);
+                    final.AddCssClass(i == PageBlah.CurrentPage
+                    ? PageClassSelected : PageClassNormal);
+                }
                 tb.InnerHtml.Append(i.ToString());
 
                 final.InnerHtml.AppendHtml(tb);
